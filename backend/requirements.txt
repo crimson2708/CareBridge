@@ -1,0 +1,23 @@
+# CareBridge Backend Dependencies
+
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.22
+
+# Voice and AI (Groq via the OpenAI-compatible API; Sarvam for Hindi)
+openai==1.83.0
+sarvamai==0.1.32
+
+# Database / auth
+supabase==2.28.0
+
+# Environment
+python-dotenv==1.0.1
+
+# Validation
+pydantic==2.10.5
+
+# Tests
+pytest==8.3.4
+httpx==0.28.1
