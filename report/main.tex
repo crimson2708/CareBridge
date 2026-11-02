@@ -1,0 +1,658 @@
+\documentclass{tietreport}
+
+% Import images
+\usepackage{graphicx}
+
+% Bibliography configuration
+\usepackage[
+  date=year,
+  style=alphabetic,
+  backend=biber,
+  sorting=nty,
+  maxnames=5,
+  minnames=3,
+  maxalphanames=4,
+  minalphanames=3,
+  backref=true,
+  doi=false,
+  isbn=false,
+  url=false,
+  eprint=false
+]{biblatex}
+\addbibresource{references.bib}
+
+% Placeholder box for diagrams that are still to be drawn.
+% Replace each \diagramslot{...} with \includegraphics once the
+% figure files exist in report/figures/.
+% #1 = placeholder text, #2 = caption, #3 = label key, #4 = height
+\newcommand{\diagramslot}[4]{%
+  \begin{figure}[h]
+    \centering
+    \fbox{%
+      \begin{minipage}[c][#4][c]{0.88\textwidth}
+        \centering\itshape\small #1
+      \end{minipage}%
+    }
+    \caption{#2}
+    \label{fig:#3}
+  \end{figure}%
+}
+
+%% ==================================================
+%% PROJECT DETAILS
+%% ==================================================
+
+\TitlePageHeader{%
+  UCS503P - Software Engineering Laboratory%
+}
+
+\ProjectTitle{%
+  CareBridge%
+}
+
+\ProjectSubTitle{%
+  A Structured Nurse Handoff and Patient Status
+  Management System%
+}
+
+\author{%
+  \texttt{102XXXXXXX} Arnav Sharma \\
+  \texttt{102XXXXXXX} Dhruv Dwivedi \\
+  \texttt{102XXXXXXX} Pratham Nandwani \\
+  \texttt{102XXXXXXX} Jalaj Poonia%
+}
+
+\TitlePageSubText{%
+  Group: \texttt{XXXX} BE Third Year, CSE%
+}
+
+\AdvisorName{%
+  Anushka Choudhary%
+}
+
+\TitlePageFooterText{{%
+    \large Mid-Semester Evaluation \\[0.2cm]
+    \bfseries Computer Science and Engineering
+    Department%
+  } \\[0.15cm]
+  Thapar Institute of Engineering and Technology,
+  Patiala%
+}
+
+%% ==================================================
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+% ===== CHAPTER 1: INTRODUCTION =====
+
+\chapter{Introduction}
+
+\section{Background and Context}
+
+A nursing shift handoff is the moment responsibility for a
+patient passes from one nurse to another. It happens several
+times a day in every ward, and it is one of the few points
+in clinical care where the full state of a patient exists
+only in someone's short-term memory. What the outgoing nurse
+remembers to say is what the incoming nurse knows.
+
+This is a documented weak point rather than a hypothetical
+one. The World Health Organization treats communication
+during hand-overs as a priority patient-safety
+problem~\cite{who2007handover}; reviews of the nursing
+handoff literature find the process unstandardised and
+variable between individuals~\cite{riesenberg2010handoffs};
+and accreditation bodies have issued specific guidance on
+inadequate hand-off
+communication~\cite{jointcommission2017handoff}. Where
+structured protocols have been introduced and studied, the
+measured effect is a substantial reduction in preventable
+adverse events~\cite{starmer2014ipass}.
+
+CareBridge gives nurses a structured place to record patient
+status through the shift, and an accountable mechanism for
+transferring that record to the next nurse.
+
+\subsection{Problem Statement}
+
+Current ward practice shows five recurring failures:
+
+\begin{enumerate}
+  \item \textbf{Nothing is recorded consistently.} Handoffs
+    happen verbally or from memory, so completeness depends
+    on recall.
+  \item \textbf{Quality varies with the individual.} The
+    process has no floor: a rushed handoff at the end of a
+    long shift may omit the detail that mattered.
+  \item \textbf{There is no record of who said what.} Later,
+    nothing establishes what was communicated, by whom, or
+    whether it was acknowledged.
+  \item \textbf{There is no way to push back.} An unclear or
+    misdirected handoff cannot be formally rejected or
+    flagged.
+  \item \textbf{Nothing is measurable.} The handoff leaves
+    no trace, so there is no way to tell whether it is
+    improving.
+\end{enumerate}
+
+The common cause is that the handoff has no \emph{artefact}.
+Nothing written down means nothing to review, audit, dispute
+or measure. CareBridge creates that artefact and builds
+accountability around it.
+
+\section{Project Objectives}
+
+\begin{enumerate}
+  \item \textbf{Structured patient record.} Let a nurse
+    accumulate notes per patient through the shift, split
+    into \emph{Details} and \emph{Major Decisions}, so the
+    handoff is composed from a record rather than from
+    memory.
+  \item \textbf{Per-patient, addressed handoff.} Let her
+    choose which patients to hand over, edit the text for
+    each, and send each to a \emph{named} incoming nurse.
+  \item \textbf{Explicit accountability.} Require a
+    response of \emph{Accept}, \emph{Decline} or
+    \emph{Report Issue} --- with a mandatory reason for the
+    latter two --- and record every transition in an
+    append-only audit trail.
+  \item \textbf{Measurability.} Make Time-to-Acknowledgement
+    (TTA), the interval between sending and answering,
+    computable directly from stored timestamps.
+  \item \textbf{Verified access control.} Ensure a nurse can
+    reach only her own patients, or one being handed to her,
+    and demonstrate it with automated tests.
+\end{enumerate}
+
+\subsection{Scope}
+\label{sec:scope}
+
+The system defines three actors: nurse, doctor and
+administrator. This deliverable implements the \textbf{nurse
+workflow completely} and defers the other two, on the
+principle that one working actor is demonstrable and
+testable where three partial ones are neither. The schema
+and access-control model already accommodate all three, so
+the remaining interfaces are additive.
+Section~\ref{sec:deferred} lists what is deferred.
+
+% ===== CHAPTER 2: METHODOLOGY & DESIGN =====
+
+\chapter{Methodology and Design}
+
+\section{System Architecture}
+
+CareBridge is a three-tier application over a managed
+database.
+
+\diagramslot{[DIAGRAM SLOT --- System architecture: client
+tier (React/Tauri) $\rightarrow$ application tier (FastAPI)
+$\rightarrow$ data tier (Supabase Postgres), with Supabase
+Auth as an external dependency. Mark the two trust
+boundaries: the client holds only the publishable key, the
+server holds the secret key.]}{System
+Architecture}{architecture}{6cm}
+
+\begin{itemize}
+  \item \textbf{Client:} a React single-page application in
+    a Tauri shell. It holds no business rules.
+  \item \textbf{Application:} a FastAPI service owning every
+    rule --- who may read a patient, what a valid response
+    is, when a shift may close. It is the only component
+    that talks to the database.
+  \item \textbf{Data:} Supabase-managed
+    PostgreSQL~\cite{postgresql} with Row Level Security
+    beneath the application's own checks.
+\end{itemize}
+
+The client never talks to the database directly, even though
+Supabase allows it. Routing all access through FastAPI keeps
+clinical rules in one auditable place and keeps the secret
+key off client devices.
+
+\subsection{Identity}
+
+Identity comes from the Supabase Auth~\cite{supabase} JWT
+and nothing else. The client signs in, and an interceptor
+attaches the token to every request; the backend verifies it
+and resolves it to a \texttt{staff} row.
+
+No endpoint accepts a nurse identifier in a request body.
+If one did, any caller could act as any nurse and the audit
+trail would record only what the client chose to claim.
+
+The frontend holds only the \emph{publishable} key, enough
+to sign in. The backend holds the \emph{secret} key and so
+bypasses RLS --- which is why it performs its own
+authorisation, in \texttt{services/access.py}, applied as a
+dependency on every route.
+
+\subsection{Data Model}
+
+\diagramslot{[DIAGRAM SLOT --- Entity-Relationship diagram
+for the seven tables, showing cardinalities and the two
+separate links from \texttt{patients} to \texttt{staff}
+(assigned nurse, assigned doctor).]}{Entity Relationship
+Diagram}{erd}{7cm}
+
+\begin{table}[h]
+\centering
+{\small
+\begin{tabular}{|l|p{8.2cm}|}
+  \hline
+  \textbf{Table} & \textbf{Purpose} \\
+  \hline
+  \texttt{staff} & All personnel, keyed to
+    \texttt{auth.users}, with a nurse/doctor/admin role. \\
+  \hline
+  \texttt{patients} & Admitted patients, each with an
+    assigned nurse and doctor. The assigned nurse is what
+    makes ``my patients'' meaningful. \\
+  \hline
+  \texttt{shifts} & Shift lifecycle per nurse. \\
+  \hline
+  \texttt{patient\_notes} & The clinical record: body text,
+    a section (\texttt{detail} or
+    \texttt{major\_decision}), an author and a shift. \\
+  \hline
+  \texttt{handoffs} & One row per patient handed over ---
+    sender, recipient, text, response, and the timestamps
+    TTA derives from. \\
+  \hline
+  \texttt{handoff\_events} & Append-only audit trail:
+    \texttt{sent}, \texttt{viewed}, \texttt{accepted},
+    \texttt{declined}, \texttt{issue\_reported}. \\
+  \hline
+  \texttt{alerts} & Provisioned for nurse-to-doctor
+    escalation, delivered with the doctor interface. \\
+  \hline
+\end{tabular}}
+\caption{Database schema}
+\label{tab:schema}
+\end{table}
+
+Two decisions here matter. \textbf{Notes are one table, not
+two}: section is a column, so the same rows serve the
+sectioned views and the chronological log and cannot
+diverge. \textbf{A handoff is per patient, not per shift},
+because accountability attaches to a patient --- which is
+what makes it possible to decline one patient without
+rejecting a whole batch.
+
+\subsection{Rules Enforced by the Database}
+
+Invariants that must never break are constraints, so they
+hold regardless of which code path runs:
+
+\begin{itemize}
+  \item A handoff cannot be sent to oneself.
+  \item Declining or reporting an issue requires a non-empty
+    reason.
+  \item A resolved handoff always has a
+    \texttt{responded\_at}; a pending one never does ---
+    keeping TTA well-defined by construction.
+  \item At most one \emph{pending} handoff per patient, and
+    one \emph{active} shift per nurse (partial unique
+    indexes).
+\end{itemize}
+
+\subsection{Technical Stack}
+
+\begin{itemize}
+  \item \textbf{Frontend:} React 19~\cite{react},
+    TypeScript, Vite, React Router, Tailwind CSS, in Tauri
+    v2~\cite{tauri}.
+  \item \textbf{Backend:} Python 3.13,
+    FastAPI~\cite{fastapi}, Uvicorn, Pydantic v2.
+  \item \textbf{Database and auth:} Supabase (PostgreSQL 17)
+    with RLS; Supabase Auth for identity.
+  \item \textbf{Testing:} pytest with FastAPI's
+    \texttt{TestClient}.
+\end{itemize}
+
+\section{Implementation Details}
+
+\subsection{Module 1: Identity and Shift Lifecycle}
+
+The backend verifies each bearer token and resolves it to a
+\texttt{staff} row, caching verified tokens briefly to avoid
+a round trip per request.
+
+Two authorisation questions are kept separate:
+\texttt{ensure\_can\_view\_patient} (true also for a patient
+being handed to her, since she must read the record before
+deciding whether to accept) and
+\texttt{ensure\_assigned\_patient} (true only while the
+patient is hers). Collapsing them would either block the
+receiving nurse from reading what she is being asked to
+accept, or let her write to a patient who is not yet hers.
+
+Shift handling is idempotent: \texttt{GET
+/api/shifts/current} returns the open shift or opens one, so
+a refresh cannot create duplicates. Closing a shift is
+refused with HTTP 409 while patients remain assigned with no
+handoff sent.
+
+\subsection{Module 2: The Patient Record}
+
+Each patient screen shows three views over the same rows:
+\emph{Details}, \emph{Major Decisions}, and the full
+chronological \emph{Log}. Notes accumulate through the
+shift, which is what makes the handoff a review task rather
+than a recall task.
+
+Notes are append-only: no update or delete path exists in
+the API or the RLS policies. A record that can be silently
+edited afterwards cannot support the accountability the
+system exists to provide.
+
+\subsection{Module 3: Per-Patient Handoff}
+
+The flow is \textbf{prepare}, \textbf{review},
+\textbf{respond}.
+
+Preparing gathers the shift's notes for each selected
+patient and pre-fills a \emph{Details} and \emph{Major
+Decisions} box by grouping them by section --- her own text,
+saving retyping, writing nothing to the database. Reviewing
+lets her edit either box and pick a named recipient. Sending
+creates one \texttt{handoffs} row per patient with
+\texttt{sent\_at} and a \texttt{sent} audit event.
+
+The receiving nurse opens the handoff --- recording a
+\texttt{viewed} event, which makes ``she read it before
+acting'' auditable rather than assumed --- and reads
+Details, Major Decisions and the Log before responding.
+
+\diagramslot{[DIAGRAM SLOT --- Handoff state machine:
+\texttt{pending} $\rightarrow$ \texttt{accepted} /
+\texttt{declined} / \texttt{issue\_reported}, annotated with
+whether the patient assignment transfers, and where
+\texttt{responded\_at} is written.]}{Handoff State
+Machine}{handoffstate}{5.5cm}
+
+The three responses differ deliberately:
+
+\begin{itemize}
+  \item \textbf{Accept} transfers the patient.
+  \item \textbf{Decline} requires a reason and leaves the
+    patient with the sender --- wrong recipient, or too much
+    missing to act on.
+  \item \textbf{Report Issue} requires a reason and
+    \emph{still transfers} the patient: something is wrong,
+    but it needs resolving rather than rejecting, and the
+    patient must not be left unattended meanwhile.
+\end{itemize}
+
+Every response writes \texttt{responded\_at} and appends an
+event. The update is conditional on the row still being
+pending, so a concurrent second response returns HTTP 409
+rather than overwriting a recorded decision.
+
+\subsection{Module 4: Frontend}
+
+Three primary surfaces --- \emph{Shift}, \emph{My
+Patients}, \emph{Handoff} --- with nested routes for a
+patient, a note composer and a handoff review. Everything
+except login sits behind a \texttt{RequireAuth} guard.
+
+\diagramslot{[DIAGRAM SLOT --- Screen flow: Login
+$\rightarrow$ Shift dashboard, My Patients $\rightarrow$
+Patient detail $\rightarrow$ Note composer, Handoff
+(Incoming / Send tabs) $\rightarrow$ Handoff review
+$\rightarrow$ Accept / Decline / Report
+Issue.]}{Application Screen Flow}{screenflow}{7cm}
+
+The visual system is restrained: a single hue at varying
+opacity, and semantic colour reserved for state that matters
+--- amber pending, emerald accepted, rose declined. The
+layout targets shared ward tablets, using responsive units
+and safe-area insets.
+
+% ===== CHAPTER 3: RESULTS & EVALUATION =====
+
+\chapter{Results and Evaluation}
+
+\section{Testing Methodology}
+
+\begin{itemize}
+  \item \textbf{Route tests.} A \texttt{pytest} suite drives
+    the handoff state machine and note recording through
+    FastAPI's \texttt{TestClient}, with identity injected by
+    dependency override and the data layer replaced by
+    recording doubles. Each test asserts on the writes
+    actually attempted --- a status code cannot tell you
+    whether declining left the patient with the sender.
+  \item \textbf{Constraint tests.} Each database constraint
+    was checked by attempting the forbidden operation
+    against the live schema in a transaction and confirming
+    rejection.
+  \item \textbf{Integration checks.} Schema, foreign keys
+    and seeded data were verified against the live Supabase
+    instance, including signing in as a seeded nurse and
+    confirming she resolves to the expected patients.
+  \item \textbf{Build and security.} The frontend build
+    type-checks the whole client before bundling; Supabase's
+    advisor was run after each migration to catch missing
+    RLS policies.
+\end{itemize}
+
+\section{Verification Results}
+
+\begin{table}[h]
+\centering
+{\small
+\begin{tabular}{|p{7.2cm}|r|l|}
+  \hline
+  \textbf{Check} & \textbf{Count} & \textbf{Result} \\
+  \hline
+  Automated backend tests & 15 & All pass \\
+  \hline
+  \quad Handoff state machine and access & 10 & All pass \\
+  \hline
+  \quad Note recording and access & 5 & All pass \\
+  \hline
+  Database constraint checks & 7 & All enforced \\
+  \hline
+  Tables with Row Level Security enabled & 7 of 7 & Enabled \\
+  \hline
+  Critical RLS security findings & 0 & Clear \\
+  \hline
+  Frontend type-check and build & 1 & Passes \\
+  \hline
+\end{tabular}}
+\caption{Verification results}
+\label{tab:verification}
+\end{table}
+
+The constraint checks confirmed, by direct attempt against
+the live schema, that a self-addressed handoff is rejected;
+a reasonless decline is rejected; a second pending handoff
+for the same patient is rejected; resolving without a
+response timestamp is rejected; accepting records the TTA
+clock; and a patient becomes eligible for a fresh handoff
+once the previous one resolves.
+
+Access control was verified at both layers. At the database
+layer, querying as a seeded nurse returned exactly her 3 of
+the 6 seeded patients. At the application layer, tests
+confirm a nurse cannot write notes for another nurse's
+patient, cannot read a handoff addressed to someone else,
+and that a sender cannot answer her own handoff on the
+recipient's behalf.
+
+RLS is enabled with policies on all seven tables and the
+anonymous role's access revoked, so no table is reachable
+--- or discoverable --- without a valid session.
+
+The API surface is 16 endpoints across five routers (staff,
+shifts, patients, notes, handoff).
+
+\section{Evaluation Metric: Time-to-Acknowledgement}
+
+The primary metric is \textbf{Time-to-Acknowledgement}: the
+interval between a handoff being sent and answered. Every
+handoff records \texttt{sent\_at} and \texttt{responded\_at},
+and a constraint guarantees the pair stays consistent, so
+the metric is computable directly:
+
+\begin{verbatim}
+SELECT avg(responded_at - sent_at)
+FROM   handoffs
+WHERE  responded_at IS NOT NULL;
+\end{verbatim}
+
+The secondary metric --- clean-accept rate, the proportion
+accepted without an issue reported --- comes from the same
+table.
+
+\textbf{No measured TTA values are reported here.} That
+requires a pilot with practising nurses, which has not been
+run. Numbers from the development team exercising its own
+interface would measure familiarity with that interface, not
+handoff performance in a ward. The deliverable at this stage
+is the instrumentation.
+
+\section{Analysis}
+
+All five objectives are implemented and verified.
+Accountability is end-to-end: identity comes from a verified
+token, every transition is recorded with its actor, and the
+\texttt{viewed} event distinguishes a handoff that was read
+from one merely accepted. Measurability is guaranteed by
+constraint rather than convention. Access control is
+enforced at two independent layers and demonstrated by tests
+that assert on attempted writes.
+
+\subsection{Challenges}
+\label{sec:challenges}
+
+\textbf{Concurrent database access.} Each screen issues
+several API requests in parallel, and each request runs
+several queries. The synchronous database client, driven
+from a thread pool, shares one connection pool across those
+threads; under concurrency this failed intermittently on
+Windows, and because the failure took every in-flight
+request on the connection with it, a whole screen would fail
+at once. Moving to the asynchronous client removed the
+shared-pool problem --- failures over a repeated
+175-request load test went from 19 to zero.
+
+\textbf{A permissions fault that looked like a data
+problem.} With RLS enabled, backend reads failed with
+\emph{permission denied}, which surfaced as a nurse simply
+having no patients --- a symptom pointing away from its
+cause. The backend had been configured with the publishable
+key, which cannot bypass RLS. Besides using the correct key,
+a startup check now refuses to launch on a publishable one,
+so this cannot again present as an empty patient list.
+
+\textbf{Defining ``Report Issue''.} Accept and Decline have
+obvious semantics; this does not. Behaving like Decline
+risks bouncing back a patient who is then unattended;
+behaving like Accept risks the problem being forgotten. It
+transfers care but keeps the issue on record, on the
+reasoning that patient coverage must never be what lapses
+while a documentation problem is sorted out.
+
+\subsection{What Is Deferred}
+\label{sec:deferred}
+
+\begin{itemize}
+  \item The \textbf{doctor interface} --- consolidated
+    per-patient logs and nurse-to-doctor escalation. The
+    \texttt{alerts} table and
+    \texttt{assigned\_doctor\_id} already support it.
+  \item The \textbf{administrator interface} --- staff
+    management and assignment, which currently needs direct
+    database access.
+  \item \textbf{Voice capture} for dictating notes.
+  \item \textbf{Push notification} of new or disputed
+    handoffs; the inbox badge refreshes on navigation.
+  \item \textbf{Deployment} --- the backend is not yet
+    hosted.
+  \item \textbf{The pilot}, and all measured outcome data.
+\end{itemize}
+
+% ===== CHAPTER 4: CONCLUSION =====
+
+\chapter{Conclusion}
+
+\section{Summary of Work}
+
+CareBridge delivers a working nurse handoff workflow. A
+nurse signs in against a real identity provider, sees the
+patients under her care, and builds a structured record for
+each across Details and Major Decisions. At shift end she
+selects patients, reviews the text, and sends each to a
+named colleague, who reads it in full and answers with
+Accept, Decline or Report Issue --- with a reason where one
+is owed. Every step is recorded with its actor and
+timestamp.
+
+All five objectives are met and verified by 15 automated
+tests, 7 constraint checks, RLS across all seven tables and
+a clean security advisory.
+
+\section{Key Findings}
+
+\begin{itemize}
+  \item \textbf{Accountability needs an addressed artefact.}
+    A handoff cannot be declined, disputed or measured until
+    it is a durable object with a named sender and
+    recipient. Making handoffs per-patient is what made the
+    three responses coherent as a set.
+  \item \textbf{Guarantees should be structural.} Rules in
+    the database hold whatever code runs; rules in the
+    interface hold only until a second path to the data
+    exists.
+  \item \textbf{Measurement must be designed in.} TTA is
+    computable because two timestamps and a constraint were
+    added at schema-design time; retrofitting a metric is
+    far harder.
+\end{itemize}
+
+\section{Future Work and Recommendations}
+\label{sec:futurework}
+
+\begin{enumerate}
+  \item \textbf{Complete the remaining actors} --- the
+    doctor and administrator screens. Both are supported by
+    the existing schema and need no migration.
+  \item \textbf{Run the pilot and measure TTA} with 10--15
+    nurses or a simulated ward, establishing a baseline for
+    the current process by observation first so the
+    comparison means something.
+  \item \textbf{Add voice capture} for note entry, with a
+    mandatory review step so no transcribed text reaches the
+    record without the nurse approving it.
+  \item \textbf{Deploy the backend} to managed hosting with
+    CORS restricted to the deployed client origin.
+  \item \textbf{Add push notification} so a nurse learns of
+    a handoff without navigating to look for it.
+\end{enumerate}
+
+\section{Final Remarks}
+
+The most useful lesson concerned where to put a rule. Rules
+in the interface hold until someone builds a second path to
+the same data; rules in the database hold unconditionally.
+Working through this repeatedly changed the question we
+asked from ``how do we make the app do the right thing'' to
+``how do we make the wrong thing impossible''.
+
+Handoffs will not stop being difficult because software
+exists. But the specific failure this project targets ---
+information that does not survive the transition between two
+people --- is now recorded, addressed, answerable and
+measurable.
+
+% ===== BIBLIOGRAPHY =====
+
+\printbibliography[heading=bibintoc]
+
+\end{document}

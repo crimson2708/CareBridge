@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03F6B9560997880A51A69A0B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = EC062F99E29F9036F3A64517 /* assets */; };
+		04B484EC9B69756E4661FCB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676DB3FD87AB025B8ADE0317 /* CoreGraphics.framework */; };
+		08CD24BB949A31C0F2C72537 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F736638A7BF9690486F1893 /* WebKit.framework */; };
+		48AD92141485980401D14E25 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1853CE2689C16E1744B6AEA3 /* Security.framework */; };
+		58007D18C3334B2C95E15C3D /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BDD4E652901DBAF2663118 /* Metal.framework */; };
+		677E3CA87C459B3E1FD5EB07 /* libapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1D6F0DDD7FBF42B9F388E1 /* libapp.a */; };
+		94488C3404B0091DDEA502B8 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA66E977CF7F40F783460A0F /* main.mm */; };
+		B70F5B769646462FB94E7022 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BFF4AE7F9F1F3FC1D712AB /* LaunchScreen.storyboard */; };
+		CAFFE09150C77FD8F5AC1E92 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77CAB1C1CB6E4E13991D7B /* UIKit.framework */; };
+		CC6DFB1DA158FAB1B3AA851A /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95AA1938B6C2F42137D6C66B /* MetalKit.framework */; };
+		DC35B28B34B9565330C9AAC9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25191E547948EF12AFF7E652 /* QuartzCore.framework */; };
+		E4B5DD2C4D9FCB864F58A76F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 562FA4CF26631349024C6391 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1853CE2689C16E1744B6AEA3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		25191E547948EF12AFF7E652 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3B960C04531B17E708F02A10 /* lib.rs */ = {isa = PBXFileReference; path = lib.rs; sourceTree = "<group>"; };
+		3F736638A7BF9690486F1893 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		562FA4CF26631349024C6391 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		676DB3FD87AB025B8ADE0317 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8F1D6F0DDD7FBF42B9F388E1 /* libapp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libapp.a; sourceTree = "<group>"; };
+		952BFDD22676F950F316FB23 /* main.rs */ = {isa = PBXFileReference; path = main.rs; sourceTree = "<group>"; };
+		95AA1938B6C2F42137D6C66B /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		A9D138B815B34C4D6F51D939 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B9CF05EC0B7B4B36C97354D6 /* carebridge_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = carebridge_iOS.entitlements; sourceTree = "<group>"; };
+		BE6DDB3BC98C55FFA8B896B0 /* bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bindings.h; sourceTree = "<group>"; };
+		C7564982E58DAAE156FCD5E4 /* carebridge_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = carebridge_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA66E977CF7F40F783460A0F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		E0BDD4E652901DBAF2663118 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		E1BFF4AE7F9F1F3FC1D712AB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EC062F99E29F9036F3A64517 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
+		FA77CAB1C1CB6E4E13991D7B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9EC103D11D9BE7ADECDA19CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				677E3CA87C459B3E1FD5EB07 /* libapp.a in Frameworks */,
+				04B484EC9B69756E4661FCB9 /* CoreGraphics.framework in Frameworks */,
+				58007D18C3334B2C95E15C3D /* Metal.framework in Frameworks */,
+				CC6DFB1DA158FAB1B3AA851A /* MetalKit.framework in Frameworks */,
+				DC35B28B34B9565330C9AAC9 /* QuartzCore.framework in Frameworks */,
+				48AD92141485980401D14E25 /* Security.framework in Frameworks */,
+				CAFFE09150C77FD8F5AC1E92 /* UIKit.framework in Frameworks */,
+				08CD24BB949A31C0F2C72537 /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13EE503BDA9209C38FD315CA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				43A79D7CC7ED2B6CDD811446 /* carebridge */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		220072892067B889DE77B7D9 /* carebridge_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A9D138B815B34C4D6F51D939 /* Info.plist */,
+				B9CF05EC0B7B4B36C97354D6 /* carebridge_iOS.entitlements */,
+			);
+			path = carebridge_iOS;
+			sourceTree = "<group>";
+		};
+		2E54970040311A6077042955 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7564982E58DAAE156FCD5E4 /* carebridge_iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43A79D7CC7ED2B6CDD811446 /* carebridge */ = {
+			isa = PBXGroup;
+			children = (
+				CA66E977CF7F40F783460A0F /* main.mm */,
+				C90D775FEA1826CD3ADA5D39 /* bindings */,
+			);
+			path = carebridge;
+			sourceTree = "<group>";
+		};
+		8B19C6DF83ED60A7BA093C59 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		9A787E4C339E5D4170F453CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				676DB3FD87AB025B8ADE0317 /* CoreGraphics.framework */,
+				8F1D6F0DDD7FBF42B9F388E1 /* libapp.a */,
+				E0BDD4E652901DBAF2663118 /* Metal.framework */,
+				95AA1938B6C2F42137D6C66B /* MetalKit.framework */,
+				25191E547948EF12AFF7E652 /* QuartzCore.framework */,
+				1853CE2689C16E1744B6AEA3 /* Security.framework */,
+				FA77CAB1C1CB6E4E13991D7B /* UIKit.framework */,
+				3F736638A7BF9690486F1893 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C90D775FEA1826CD3ADA5D39 /* bindings */ = {
+			isa = PBXGroup;
+			children = (
+				BE6DDB3BC98C55FFA8B896B0 /* bindings.h */,
+			);
+			path = bindings;
+			sourceTree = "<group>";
+		};
+		D5A28477824FF8222BAF36CA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3B960C04531B17E708F02A10 /* lib.rs */,
+				952BFDD22676F950F316FB23 /* main.rs */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+		EBF0C24688D4F82320127FDC = {
+			isa = PBXGroup;
+			children = (
+				EC062F99E29F9036F3A64517 /* assets */,
+				562FA4CF26631349024C6391 /* Assets.xcassets */,
+				E1BFF4AE7F9F1F3FC1D712AB /* LaunchScreen.storyboard */,
+				8B19C6DF83ED60A7BA093C59 /* Externals */,
+				220072892067B889DE77B7D9 /* carebridge_iOS */,
+				13EE503BDA9209C38FD315CA /* Sources */,
+				D5A28477824FF8222BAF36CA /* src */,
+				9A787E4C339E5D4170F453CE /* Frameworks */,
+				2E54970040311A6077042955 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		558AEBE7E443DDC9384E241F /* carebridge_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F4F4E13ABDB551C1B9D6104 /* Build configuration list for PBXNativeTarget "carebridge_iOS" */;
+			buildPhases = (
+				B2B3B391FD05928A78430641 /* Build Rust Code */,
+				BF40FAEEFF07EDDEDA6507ED /* Sources */,
+				F64F133D786043E2F8EDAC04 /* Resources */,
+				9EC103D11D9BE7ADECDA19CB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = carebridge_iOS;
+			packageProductDependencies = (
+			);
+			productName = carebridge_iOS;
+			productReference = C7564982E58DAAE156FCD5E4 /* carebridge_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43218281293EFBCDBEC127CC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 05EE2B2DEE039B9A5C186D14 /* Build configuration list for PBXProject "carebridge" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = EBF0C24688D4F82320127FDC;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				558AEBE7E443DDC9384E241F /* carebridge_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F64F133D786043E2F8EDAC04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4B5DD2C4D9FCB864F58A76F /* Assets.xcassets in Resources */,
+				B70F5B769646462FB94E7022 /* LaunchScreen.storyboard in Resources */,
+				03F6B9560997880A51A69A0B /* assets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2B3B391FD05928A78430641 /* Build Rust Code */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rust Code";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Externals/x86_64/${CONFIGURATION}/libapp.a",
+				"$(SRCROOT)/Externals/arm64/${CONFIGURATION}/libapp.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bun tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BF40FAEEFF07EDDEDA6507ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94488C3404B0091DDEA502B8 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9592D932DC103F5218B8DC51 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = carebridge_iOS/carebridge_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = carebridge_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = exceptionallybad.carebridge;
+				PRODUCT_NAME = carebridge;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = arm64;
+			};
+			name = release;
+		};
+		97B1634DC4D7C5EE05D6C041 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = carebridge_iOS/carebridge_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = carebridge_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = exceptionallybad.carebridge;
+				PRODUCT_NAME = carebridge;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = arm64;
+			};
+			name = debug;
+		};
+		CCFCA7C4F2CC3BE0D087FCD6 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = release;
+		};
+		EE1D1A4832A52008204F79DE /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05EE2B2DEE039B9A5C186D14 /* Build configuration list for PBXProject "carebridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE1D1A4832A52008204F79DE /* debug */,
+				CCFCA7C4F2CC3BE0D087FCD6 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+		1F4F4E13ABDB551C1B9D6104 /* Build configuration list for PBXNativeTarget "carebridge_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97B1634DC4D7C5EE05D6C041 /* debug */,
+				9592D932DC103F5218B8DC51 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43218281293EFBCDBEC127CC /* Project object */;
+}
